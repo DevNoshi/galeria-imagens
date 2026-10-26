@@ -1,65 +1,81 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeria de Imagens</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria de Imagens</title>
+  <meta name="theme-color" content="#0d0e12">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>Galeria de Imagens</h1>
-            <ul class="filter-buttons">
-                <li data-filter="all" class="active">Todos</li>
-                <li data-filter="nature">Natureza</li>
-                <li data-filter="landscape">Paisagens</li>
-                <li data-filter="city">Cidade</li>
-                <li data-filter="people">Pessoas</li>
-            </ul>
-        </nav>
-    </header>
+  <div class="glow" aria-hidden="true"></div>
 
-    <main>
-        <section class="gallery">
-            <div class="gallery-item nature">
-                <img src="imgs/nature.jpg" alt="Natureza">
-            </div>
-            <div class="gallery-item nature">
-                <img src="imgs/nature2.jpg" alt="Natureza">
-            </div>
-            <div class="gallery-item landscape">
-                <img src="imgs/paisage.jpg" alt="Paisagem">
-            </div>
-            <div class="gallery-item landscape">
-                <img src="imgs/paisage2.jpg" alt="Paisagem">
-            </div>
-            <div class="gallery-item city">
-                <img src="imgs/nightcity.jpg" alt="Cidade">
-            </div>
-            <div class="gallery-item city">
-                <img src="imgs/nightcity2.jpg" alt="Cidade">
-            </div>
-            <div class="gallery-item people">
-                <img src="imgs/friends.jpg" alt="Pessoas">
-            </div>
-            <div class="gallery-item people">
-                <img src="imgs/friends2.jpg" alt="Pessoas">
-            </div>
-        </section>
-    </main>
+  <header class="wrap top">
+    <h1>Galeria de imagens</h1>
+    <div class="tabs" role="tablist" aria-label="Origem das fotos">
+      <button class="tab active" role="tab" aria-selected="true" data-mode="local">Minhas fotos</button>
+      <button class="tab" role="tab" aria-selected="false" data-mode="remote">Buscar no Unsplash</button>
+    </div>
+  </header>
 
-    <div class="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <img class="lightbox-img" src="" alt="Imagem Ampliada">
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
+  <main class="wrap">
+    <div class="mode" id="mode-local">
+      <nav class="filters" aria-label="Filtrar por categoria">
+        <button class="chip active" data-filter="all" aria-pressed="true">Todos</button>
+        <button class="chip" data-filter="nature" aria-pressed="false">Natureza</button>
+        <button class="chip" data-filter="landscape" aria-pressed="false">Paisagens</button>
+        <button class="chip" data-filter="city" aria-pressed="false">Cidade</button>
+        <button class="chip" data-filter="people" aria-pressed="false">Pessoas</button>
+      </nav>
+      <section class="gallery" id="localGrid" aria-label="Imagens">
+      <button class="gallery-item nature" data-label="Natureza"><img src="imgs/nature.jpg" alt="Natureza 1" loading="lazy"></button>
+      <button class="gallery-item nature" data-label="Natureza"><img src="imgs/nature2.jpg" alt="Natureza 2" loading="lazy"></button>
+      <button class="gallery-item landscape" data-label="Paisagens"><img src="imgs/paisage.jpg" alt="Paisagem 1" loading="lazy"></button>
+      <button class="gallery-item landscape" data-label="Paisagens"><img src="imgs/paisage2.jpg" alt="Paisagem 2" loading="lazy"></button>
+      <button class="gallery-item city" data-label="Cidade"><img src="imgs/nightcity.jpg" alt="Cidade à noite 1" loading="lazy"></button>
+      <button class="gallery-item city" data-label="Cidade"><img src="imgs/nightcity2.jpg" alt="Cidade à noite 2" loading="lazy"></button>
+      <button class="gallery-item people" data-label="Pessoas"><img src="imgs/friends.jpg" alt="Pessoas 1" loading="lazy"></button>
+      <button class="gallery-item people" data-label="Pessoas"><img src="imgs/friends2.jpg" alt="Pessoas 2" loading="lazy"></button>
+    </section>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Galeria de Imagens. Dev Noshi - Todos os direitos reservados.</p>
-    </footer>
+    <div class="mode" id="mode-remote" hidden>
+      <form class="search" id="searchForm" role="search">
+        <input type="search" id="searchInput" placeholder="Busque por qualquer tema: montanha, café, tecnologia…" maxlength="60" autocomplete="off" aria-label="Buscar fotos">
+        <button type="submit" class="go">Buscar</button>
+      </form>
+      <nav class="filters" id="quick" aria-label="Categorias rápidas">
+        <button class="pill" data-q="nature">Natureza</button>
+        <button class="pill" data-q="landscape">Paisagens</button>
+        <button class="pill" data-q="city night">Cidade</button>
+        <button class="pill" data-q="people">Pessoas</button>
+        <button class="pill" data-q="technology">Tecnologia</button>
+        <button class="pill" data-q="animals">Animais</button>
+      </nav>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <section class="gallery" id="remoteGrid" aria-label="Resultados da busca"></section>
+      <div class="more-wrap"><button class="go" id="moreBtn" hidden>Carregar mais</button></div>
+      <p class="credit">Fotos fornecidas por <a href="https://unsplash.com/?utm_source=galeria-de-imagens&amp;utm_medium=referral" target="_blank" rel="noopener noreferrer">Unsplash</a>.</p>
+    </div>
+  </main>
 
-    <script src="script.js"></script>
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada" aria-hidden="true">
+    <button class="close-lightbox" aria-label="Fechar">&times;</button>
+    <button class="prev" aria-label="Imagem anterior">&#10094;</button>
+    <figure>
+      <img class="lightbox-img" src="" alt="">
+      <figcaption><span class="lightbox-cap"></span><span class="lightbox-count"></span></figcaption>
+    </figure>
+    <button class="next" aria-label="Próxima imagem">&#10095;</button>
+  </div>
+
+  <footer class="wrap foot"><p>&copy; 2026 Dev Noshi</p></footer>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+  <script src="unsplash.js"></script>
 </body>
 </html>
